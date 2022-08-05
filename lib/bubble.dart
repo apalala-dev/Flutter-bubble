@@ -6,8 +6,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 part 'bubble_clipper.dart';
+
 part 'bubble_edges.dart';
+
 part 'bubble_painter.dart';
+
 part 'bubble_style.dart';
 
 enum BubbleNip {
@@ -27,6 +30,26 @@ enum BubbleNip {
 }
 
 class Bubble extends StatelessWidget {
+  final Widget? child;
+
+  /// Background color of the bubble
+  final Color color;
+  final Color borderColor;
+  final double borderWidth;
+
+  /// Whether the border should be painted above or below the background
+  final bool borderUp;
+
+  /// The eventual shadow that you want to apply
+  final Shadow? shadow;
+
+  /// Additional margin around the bubble
+  final EdgeInsets margin;
+  final AlignmentGeometry? alignment;
+
+  /// Clipper used to get the path of the bubble (for shadow, background and border)
+  final BubbleClipper bubbleClipper;
+
   Bubble({
     Key? key,
     this.child,
@@ -42,8 +65,7 @@ class Bubble extends StatelessWidget {
     Color? borderColor,
     double? borderWidth,
     bool? borderUp,
-    double? elevation,
-    Color? shadowColor,
+    Shadow? shadow,
     BubbleEdges? padding,
     BubbleEdges? margin,
     AlignmentGeometry? alignment,
@@ -52,8 +74,7 @@ class Bubble extends StatelessWidget {
         borderColor = borderColor ?? style?.borderColor ?? Colors.transparent,
         borderWidth = borderWidth ?? style?.borderWidth ?? 1,
         borderUp = borderUp ?? style?.borderUp ?? true,
-        elevation = elevation ?? style?.elevation ?? 1,
-        shadowColor = shadowColor ?? style?.shadowColor ?? Colors.black,
+        shadow = shadow ?? style?.shadow,
         margin = EdgeInsets.only(
           left: margin?.left ?? style?.margin?.left ?? 0,
           top: margin?.top ?? style?.margin?.top ?? 0,
@@ -79,17 +100,6 @@ class Bubble extends StatelessWidget {
         ),
         super(key: key);
 
-  final Widget? child;
-  final Color color;
-  final Color borderColor;
-  final double borderWidth;
-  final bool borderUp;
-  final double elevation;
-  final Color shadowColor;
-  final EdgeInsets margin;
-  final AlignmentGeometry? alignment;
-  final BubbleClipper bubbleClipper;
-
   @override
   Widget build(BuildContext context) => Container(
         key: key,
@@ -102,8 +112,7 @@ class Bubble extends StatelessWidget {
             borderColor: borderColor,
             borderWidth: borderWidth,
             borderUp: borderUp,
-            elevation: elevation,
-            shadowColor: shadowColor,
+            shadow: shadow,
           ),
           child: Container(
             padding: bubbleClipper.edgeInsets,

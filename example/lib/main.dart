@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:bubble/bubble.dart';
 import 'package:bubble/issue_clipper.dart';
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(MyApp());
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
     color: Colors.white,
     borderColor: Colors.blue,
     borderWidth: 1,
-    elevation: 4,
+    shadow: Shadow(offset: Offset(0, 4), blurRadius: 2),
     margin: BubbleEdges.only(top: 8, right: 50),
     alignment: Alignment.topLeft,
   );
@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
     color: Color.fromARGB(255, 225, 255, 199),
     borderColor: Colors.blue,
     borderWidth: 1,
-    elevation: 4,
+    shadow: Shadow(offset: Offset(0, 4), blurRadius: 4),
     margin: BubbleEdges.only(top: 8, left: 50),
     alignment: Alignment.topRight,
   );
@@ -170,13 +170,41 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Bubble(
                 margin: const BubbleEdges.only(top: 5),
-                elevation: 10,
-                shadowColor: Colors.red[900],
+                shadow: const Shadow(
+                    offset: Offset(0, 4), color: Colors.red, blurRadius: 8),
                 alignment: Alignment.topRight,
                 nip: BubbleNip.rightTop,
                 color: Colors.green,
                 child: const Text('dsfdfdfg'),
-              )
+              ),
+              Container(
+                color: Colors.red,
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(
+                    'Nip top and bottom, no padding',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ]),
+              ),
+              Bubble(
+                nipOffset: 30,
+                alignment: Alignment.topRight,
+                nip: BubbleNip.bottomRight,
+                color: Colors.green,
+                child: const Text('Bottom nip right'),
+              ),
+              const Align(
+                alignment: Alignment.centerRight,
+                child: CircleAvatar(
+                    backgroundColor: Colors.amber, child: FlutterLogo()),
+              ),
+              Bubble(
+                nipOffset: 30,
+                nip: BubbleNip.bottomRight,
+                color: Colors.green,
+                child: const Text('dsfdfdfg'),
+              ),
             ],
           ),
         ),
